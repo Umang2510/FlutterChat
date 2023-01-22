@@ -1,11 +1,11 @@
 # FlutterChat
  Chat application using Flutter framework and realtime Firbase support.
  
- Bakend - Firebase
- Frontend - Flutter SDK
+ Bakend - Firebase </br>
+ Frontend - Flutter SDK </br>
  
- Features:
- Login
- Image Upload
- Chat Screen
- Push Notification
+ Features: </br>
+ Login </br>
+ Image Upload </br>
+ Chat Screen </br>
+ Push Notification </br>

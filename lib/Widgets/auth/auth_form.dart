@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
@@ -41,82 +39,85 @@ class _AuthFormState extends State<AuthForm> {
             padding: const EdgeInsets.all(16),
             child: Form(
               key: _formKey,
-              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                TextFormField(
-                  key: const ValueKey('email'),
-                  validator: (value) {
-                    if (value!.isEmpty || !value.contains('@')) {
-                      return 'Please, Enter valid Email';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onSaved: (value) {
-                    _useremail = value!;
-                  },
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                  ),
-                ),
-                if (!_isLogin)
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
                   TextFormField(
-                    key: const ValueKey('username'),
+                    key: const ValueKey('email'),
                     validator: (value) {
-                      if (value!.isEmpty || value.length < 4) {
-                        return 'Password must be atleast 4 characters long';
+                      if (value!.isEmpty || !value.contains('@')) {
+                        return 'Please, Enter valid Email';
                       } else {
                         return null;
                       }
                     },
                     onSaved: (value) {
-                      _username = value!;
+                      _useremail = value!;
                     },
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
-                      labelText: 'Username',
+                      labelText: 'Email',
                     ),
                   ),
-                TextFormField(
-                  key: const ValueKey('password'),
-                  validator: (value) {
-                    if (value!.isEmpty || value.length < 7) {
-                      return 'Password must be atleast 7 characters long';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onSaved: (value) {
-                    _userPassword = value!;
-                  },
-                  //keyboardType: TextInputType.visiblePassword,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                if (widget.isLoading) const CircularProgressIndicator(),
-                if (!widget.isLoading)
-                  ElevatedButton(
-                    onPressed: _trySubmit,
-                    child: Text(_isLogin ? 'Login' : 'Signup'),
-                  ),
-                if (!widget.isLoading)
-                  TextButton(
-                    style: TextButton.styleFrom(
-                        foregroundColor: Theme.of(context).primaryColor),
-                    onPressed: () {
-                      setState(() {
-                        _isLogin = !_isLogin;
-                      });
+                  if (!_isLogin)
+                    TextFormField(
+                      key: const ValueKey('username'),
+                      validator: (value) {
+                        if (value!.isEmpty || value.length < 4) {
+                          return 'Password must be atleast 4 characters long';
+                        } else {
+                          return null;
+                        }
+                      },
+                      onSaved: (value) {
+                        _username = value!;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Username',
+                      ),
+                    ),
+                  TextFormField(
+                    key: const ValueKey('password'),
+                    validator: (value) {
+                      if (value!.isEmpty || value.length < 7) {
+                        return 'Password must be atleast 7 characters long';
+                      } else {
+                        return null;
+                      }
                     },
-                    child: Text(_isLogin
-                        ? 'Create an Account'
-                        : 'Already have an Account? Login'),
+                    onSaved: (value) {
+                      _userPassword = value!;
+                    },
+                    //keyboardType: TextInputType.visiblePassword,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
+                    ),
                   ),
-              ]),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  if (widget.isLoading) const CircularProgressIndicator(),
+                  if (!widget.isLoading)
+                    ElevatedButton(
+                      onPressed: _trySubmit,
+                      child: Text(_isLogin ? 'Login' : 'Signup'),
+                    ),
+                  if (!widget.isLoading)
+                    TextButton(
+                      style: TextButton.styleFrom(
+                          foregroundColor: Theme.of(context).primaryColor),
+                      onPressed: () {
+                        setState(() {
+                          _isLogin = !_isLogin;
+                        });
+                      },
+                      child: Text(_isLogin
+                          ? 'Create an Account'
+                          : 'Already have an Account? Login'),
+                    ),
+                ],
+              ),
             ),
           ),
         ),

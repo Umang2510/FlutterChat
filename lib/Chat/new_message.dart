@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class NewMessage extends StatefulWidget {
   const NewMessage({super.key});
@@ -13,11 +14,14 @@ class _NewMessageState extends State<NewMessage> {
   var _enteredMessage = '';
   final _controler = new TextEditingController();
 
-  void _sendMessage() {
+  void _sendMessage() async {
     FocusScope.of(context).unfocus();
-    FirebaseFirestore.instance
-        .collection('chat')
-        .add({'text': _enteredMessage, 'createdAt': Timestamp.now(),});
+    final user = await FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance.collection('chat').add({
+      'text': _enteredMessage,
+      'createdAt': Timestamp.now(),
+      'userID': user?.uid
+    });
     _controler.clear();
   }
 
@@ -31,7 +35,9 @@ class _NewMessageState extends State<NewMessage> {
           Expanded(
             child: TextField(
               controller: _controler,
-              decoration: const InputDecoration(labelText: 'Send a Message...'),
+              decoration: const InputDecoration(
+                labelText: 'Send a Message...',
+              ),
               onChanged: ((value) {
                 setState(() {
                   _enteredMessage = value;
@@ -42,7 +48,7 @@ class _NewMessageState extends State<NewMessage> {
           IconButton(
             onPressed: _enteredMessage.trim().isEmpty ? null : _sendMessage,
             icon: const Icon(Icons.send),
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           )
         ],
       ),

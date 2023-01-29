@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import '../pickers/user_image_picker.dart';
 
 class AuthForm extends StatefulWidget {
-  final void Function(String email, String password, String usernm,
+  final void Function(String email, String password, String usernm, File? image,
       bool isLogin, BuildContext context) submitfn;
   final bool isLoading;
 
-  AuthForm(this.submitfn, this.isLoading, {super.key});
+  const AuthForm(this.submitfn, this.isLoading, {super.key});
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -41,8 +41,14 @@ class _AuthFormState extends State<AuthForm> {
 
     if (isValid) {
       _formKey.currentState!.save();
-      widget.submitfn(_useremail.trim(), _userPassword.trim(), _username.trim(),
-          _isLogin, context);
+      widget.submitfn(
+        _useremail.trim(),
+        _userPassword.trim(),
+        _username.trim(),
+        _userImageFile,
+        _isLogin,
+        context,
+      );
     }
   }
 
